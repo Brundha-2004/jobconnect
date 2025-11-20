@@ -2,14 +2,221 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${job.title}">Job</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .job-content {
+            padding: 40px 30px;
+        }
+
+        .job-detail {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .job-detail:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-detail strong {
+            color: #667eea;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .job-detail span {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .description {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .description strong {
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .back-link a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-link a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .salary {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border-left-color: #20c997;
+        }
+
+        .salary strong {
+            color: white;
+        }
+
+        .salary span {
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .deadline {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border-left-color: #ff6b6b;
+        }
+
+        .deadline strong {
+            color: white;
+        }
+
+        .deadline span {
+            color: white;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h2 {
+                font-size: 2rem;
+            }
+
+            .job-content {
+                padding: 20px;
+            }
+
+            .job-detail {
+                padding: 15px;
+            }
+        }
+
+        /* Animation for page load */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
 </head>
 <body>
-    <h2 th:text="${job.title}">Job Title</h2>
-    <p><strong>Description:</strong> <span th:text="${job.description}">Job Description</span></p>
-    <p><strong>Location:</strong> <span th:text="${job.location}">Job Location</span></p>
-    <p><strong>Salary:</strong> $<span th:text="${job.salary}">Job Salary</span></p>
-    <p><strong>Deadline:</strong> <span th:text="${job.deadline}">Application Deadline</span></p>
-
-    <p><a th:href="@{/jobs}">Back to Job Listings</a></p>
+    <div class="container">
+        <div class="header">
+            <h2 th:text="${job.title}">Job Title</h2>
+        </div>
+        
+        <div class="job-content">
+            <div class="description">
+                <strong>Description:</strong>
+                <span th:text="${job.description}">Job Description</span>
+            </div>
+            
+            <div class="job-detail">
+                <strong>Location:</strong>
+                <span th:text="${job.location}">Job Location</span>
+            </div>
+            
+            <div class="job-detail salary">
+                <strong>Salary:</strong>
+                $<span th:text="${job.salary}">Job Salary</span>
+            </div>
+            
+            <div class="job-detail deadline">
+                <strong>Deadline:</strong>
+                <span th:text="${job.deadline}">Application Deadline</span>
+            </div>
+            
+            <div class="back-link">
+                <a th:href="@{/jobs}">← Back to Job Listings</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

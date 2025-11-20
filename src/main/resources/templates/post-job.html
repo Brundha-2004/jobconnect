@@ -4,21 +4,418 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post Job - JobConnect</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #764ba2;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+            background: white;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #764ba2;
+        }
+
+        .input-with-icon input {
+            padding-left: 45px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Button Styles */
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e1e1;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Character Counter */
+        .char-counter {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .char-counter.warning {
+            color: #e67e22;
+        }
+
+        .char-counter.error {
+            color: #e74c3c;
+        }
+
+        /* Form Tips */
+        .form-tips {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .form-tips h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .form-tips ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .form-tips li {
+            margin-bottom: 8px;
+            color: #666;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .form-tips li i {
+            color: #667eea;
+            margin-top: 3px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 25px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Required Field Indicator */
+        .required::after {
+            content: " *";
+            color: #e74c3c;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <h2>Post a Job</h2>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-briefcase"></i> Post a Job</h1>
+            <p>Reach thousands of qualified candidates</p>
+        </div>
 
-    <form th:action="@{/jobs/post}" th:object="${job}" method="post">
-        <label>Title: <input type="text" th:field="*{title}" /></label><br/>
-        <label>Description: <textarea th:field="*{description}"></textarea></label><br/>
-        <label>Location: <input type="text" th:field="*{location}" /></label><br/>
-        <label>Salary: <input type="number" th:field="*{salary}" /></label><br/>
-        <label>Deadline (YYYY-MM-DD): <input type="date" th:field="*{deadline}" /></label><br/>
+        <!-- Success Message Placeholder -->
+        <div class="success-message" th:if="${success}">
+            <i class="fas fa-check-circle"></i> Job posted successfully!
+        </div>
 
-        <button type="submit">Create</button>
-    </form>
+        <!-- Form Container -->
+        <div class="form-container">
+            <form th:action="@{/jobs/post}" th:object="${job}" method="post">
+                <!-- Job Title -->
+                <div class="form-group">
+                    <label for="title" class="required">Job Title</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-heading"></i>
+                        <input type="text" id="title" th:field="*{title}" placeholder="e.g., Senior Software Engineer" required>
+                    </div>
+                </div>
 
-    <p><a th:href="@{/jobs}">Back to Jobs</a></p>
+                <!-- Job Description -->
+                <div class="form-group">
+                    <label for="description" class="required">Job Description</label>
+                    <textarea id="description" th:field="*{description}" placeholder="Describe the role, responsibilities, and requirements..." required></textarea>
+                    <div class="char-counter" id="description-counter">0/2000 characters</div>
+                </div>
+
+                <!-- Location and Salary -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="location" class="required">Location</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="location" th:field="*{location}" placeholder="e.g., New York, NY or Remote" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salary">Annual Salary ($)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <input type="number" id="salary" th:field="*{salary}" placeholder="e.g., 75000" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Deadline -->
+                <div class="form-group">
+                    <label for="deadline">Application Deadline</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="deadline" th:field="*{deadline}">
+                    </div>
+                </div>
+
+                <!-- Form Tips -->
+                <div class="form-tips">
+                    <h3><i class="fas fa-lightbulb"></i> Tips for a great job post:</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Be specific about required skills and experience</li>
+                        <li><i class="fas fa-check"></i> Highlight company culture and benefits</li>
+                        <li><i class="fas fa-check"></i> Include salary range to attract more candidates</li>
+                        <li><i class="fas fa-check"></i> Use clear, professional language</li>
+                    </ul>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Post Job Listing
+                    </button>
+                    <a th:href="@{/jobs}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Jobs
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const descriptionTextarea = document.getElementById('description');
+            const descriptionCounter = document.getElementById('description-counter');
+            
+            // Character counter for description
+            descriptionTextarea.addEventListener('input', function() {
+                const length = this.value.length;
+                descriptionCounter.textContent = `${length}/2000 characters`;
+                
+                // Update color based on length
+                if (length > 1800) {
+                    descriptionCounter.classList.add('error');
+                    descriptionCounter.classList.remove('warning');
+                } else if (length > 1500) {
+                    descriptionCounter.classList.add('warning');
+                    descriptionCounter.classList.remove('error');
+                } else {
+                    descriptionCounter.classList.remove('warning', 'error');
+                }
+            });
+            
+            // Set minimum date for deadline to today
+            const deadlineInput = document.getElementById('deadline');
+            const today = new Date().toISOString().split('T')[0];
+            deadlineInput.min = today;
+            
+            // Form validation
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                const title = document.getElementById('title').value.trim();
+                const description = document.getElementById('description').value.trim();
+                const location = document.getElementById('location').value.trim();
+                
+                if (!title || !description || !location) {
+                    e.preventDefault();
+                    alert('Please fill in all required fields (marked with *)');
+                    return false;
+                }
+                
+                if (description.length > 2000) {
+                    e.preventDefault();
+                    alert('Description must be 2000 characters or less');
+                    return false;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -4,59 +4,489 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - JobConnect</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel {
+            flex: 1;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            color: #764ba2;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-text {
+            margin-bottom: 40px;
+        }
+
+        .welcome-text h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .welcome-text p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #764ba2;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #764ba2;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23764ba2' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 12px;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            font-size: 0.85rem;
+        }
+
+        .strength-weak {
+            color: #e74c3c;
+        }
+
+        .strength-medium {
+            color: #f39c12;
+        }
+
+        .strength-strong {
+            color: #27ae60;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #667eea;
+            text-decoration: underline;
+        }
+
+        .features {
+            margin-top: 40px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feature i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .feature p {
+            font-size: 1rem;
+        }
+
+        .panel-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .panel-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .role-description {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .role-description h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .role-description p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .error-message {
+            background: #fadbd8;
+            color: #e74c3c;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-left: 4px solid #e74c3c;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .terms {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .terms a {
+            color: #764ba2;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                max-width: 500px;
+            }
+            
+            .left-panel {
+                padding: 40px 30px;
+            }
+            
+            .right-panel {
+                padding: 40px 30px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeIn 0.8s ease-out;
+        }
+    </style>
 </head>
 <body>
-    <h2> Register</h2>
-    <form th:action="@{/register}"  th:object="${user}" method="post">
-        <label>Full name :<input th:field="*{fullName}"/></label><br/>
-        <label>Email :<input th:field="*{email}" type="text"/></label><br/>
-        <label>Password :<input th:field="*{password}" type="password"/></label><br/>
-        <label>Role:
-            <select th:field="*{role}">
-                <option value="JOB_SEEKER">Job Seeker</option>
-                <option value="EMPLOYER">Employer</option>
-            </select>
-        </label><br/>
-        <div th:if="${error}" th:text="${error}" style="color:red"></div>
-        <button type="submit">Register</button>
-    </form>
-    </body>
-</html><!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - JobConnect</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-</head>
-<body>
-    <h2>Register</h2>
+    <div class="container">
+        <!-- Left Panel with Branding -->
+        <div class="left-panel">
+            <h2 class="panel-title">Join JobConnect Today</h2>
+            <p class="panel-subtitle">Start your journey to career success</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-briefcase"></i>
+                    <p>Find your dream job</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-users"></i>
+                    <p>Connect with top employers</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Advance your career</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bell"></i>
+                    <p>Get job alerts</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Panel with Registration Form -->
+        <div class="right-panel">
+            <div class="logo">
+                <i class="fas fa-handshake"></i>
+                <h1>JobConnect</h1>
+            </div>
+            
+            <div class="welcome-text">
+                <h2>Create Your Account</h2>
+                <p>Join thousands of professionals finding their perfect career match</p>
+            </div>
+            
+            <!-- Error message placeholder -->
+            <div class="error-message" th:if="${error}" th:text="${error}">
+                Error message will appear here
+            </div>
+            
+            <form th:action="@{/register}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="fullName" th:field="*{fullName}" placeholder="Enter your full name" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" th:field="*{email}" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" th:field="*{password}" placeholder="Create a password" required minlength="6">
+                    </div>
+                    <div class="password-strength" id="password-strength">
+                        Password strength: <span id="strength-text">None</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">I am a</label>
+                    <select id="role" th:field="*{role}" required>
+                        <option value="">Select your role</option>
+                        <option value="JOB_SEEKER">Job Seeker</option>
+                        <option value="EMPLOYER">Employer</option>
+                    </select>
+                    
+                    <div class="role-description" id="job-seeker-desc" style="display: none;">
+                        <h4><i class="fas fa-user-graduate"></i> Job Seeker</h4>
+                        <p>Search and apply for jobs, create your profile, and get matched with employers.</p>
+                    </div>
+                    
+                    <div class="role-description" id="employer-desc" style="display: none;">
+                        <h4><i class="fas fa-building"></i> Employer</h4>
+                        <p>Post job listings, manage applications, and find qualified candidates.</p>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-register">Create Account</button>
+                
+                <div class="terms">
+                    By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                </div>
+            </form>
+            
+            <div class="login-link">
+                <p>Already have an account? <a th:href="@{/login}">Sign in here</a></p>
+            </div>
+        </div>
+    </div>
 
-    <form th:action="@{/register}" th:object="${user}" method="post">
-
-        <label>Full Name:</label>
-        <input th:field="*{fullName}" type="text" required />
-        <br/>
-
-        <label>Email:</label>
-        <input th:field="*{email}" type="email" required />
-        <br/>
-
-        <label>Password:</label>
-        <input th:field="*{password}" type="password" required minlength="6" />
-        <br/>
-
-        <label>Role:</label>
-        <select th:field="*{role}">
-            <option value="JOB_SEEKER">Job Seeker</option>
-            <option value="EMPLOYER">Employer</option>
-        </select>
-        <br/>
-
-        <div th:if="${error}" th:text="${error}" style="color:red"></div>
-
-        <button type="submit">Register</button>
-    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const strengthText = document.getElementById('strength-text');
+            const passwordStrength = document.getElementById('password-strength');
+            const roleSelect = document.getElementById('role');
+            const jobSeekerDesc = document.getElementById('job-seeker-desc');
+            const employerDesc = document.getElementById('employer-desc');
+            
+            // Password strength indicator
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                if (password.length >= 6) strength++;
+                if (password.length >= 8) strength++;
+                if (/[A-Z]/.test(password)) strength++;
+                if (/[0-9]/.test(password)) strength++;
+                if (/[^A-Za-z0-9]/.test(password)) strength++;
+                
+                // Update strength text and color
+                if (password.length === 0) {
+                    strengthText.textContent = 'None';
+                    passwordStrength.className = 'password-strength';
+                } else if (strength <= 2) {
+                    strengthText.textContent = 'Weak';
+                    passwordStrength.className = 'password-strength strength-weak';
+                } else if (strength <= 4) {
+                    strengthText.textContent = 'Medium';
+                    passwordStrength.className = 'password-strength strength-medium';
+                } else {
+                    strengthText.textContent = 'Strong';
+                    passwordStrength.className = 'password-strength strength-strong';
+                }
+            });
+            
+            // Role description display
+            roleSelect.addEventListener('change', function() {
+                const value = this.value;
+                
+                // Hide all descriptions first
+                jobSeekerDesc.style.display = 'none';
+                employerDesc.style.display = 'none';
+                
+                // Show relevant description
+                if (value === 'JOB_SEEKER') {
+                    jobSeekerDesc.style.display = 'block';
+                } else if (value === 'EMPLOYER') {
+                    employerDesc.style.display = 'block';
+                }
+            });
+            
+            // Show error message with animation if present
+            const errorDiv = document.querySelector('.error-message');
+            if (errorDiv && errorDiv.textContent.trim() !== '') {
+                errorDiv.classList.add('show');
+            }
+            
+            // Form validation
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                const fullName = document.getElementById('fullName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const role = document.getElementById('role').value;
+                
+                if (!fullName || !email || !password || !role) {
+                    e.preventDefault();
+                    alert('Please fill in all required fields');
+                    return false;
+                }
+                
+                if (password.length < 6) {
+                    e.preventDefault();
+                    alert('Password must be at least 6 characters long');
+                    return false;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

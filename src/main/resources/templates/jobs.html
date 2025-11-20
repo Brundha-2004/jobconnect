@@ -3,30 +3,408 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobs - JobConnect</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Job Listings - JobConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 15px;
+            align-items: end;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #764ba2;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+        }
+
+        .btn-search {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e1e1;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .job-count {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Job Listings */
+        .jobs-container {
+            display: grid;
+            gap: 20px;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .job-title a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        .job-title a:hover {
+            color: #764ba2;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .job-location, .job-salary, .job-deadline {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .job-location i {
+            color: #667eea;
+        }
+
+        .job-salary i {
+            color: #28a745;
+        }
+
+        .job-deadline i {
+            color: #e74c3c;
+        }
+
+        .view-job {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .view-job:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        /* No Jobs Message */
+        .no-jobs {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-jobs i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .no-jobs h3 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .no-jobs p {
+            color: #888;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .form-group {
+                min-width: 100%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .job-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .job-info {
+                min-width: 100%;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .job-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
 </head>
 <body>
-    <h2>Job Listings</h2>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-briefcase"></i> Job Listings</h1>
+            <p>Find your next career opportunity</p>
+        </div>
 
-    <form th:action="@{/jobs}" method="get">
-        <label>Location:
-            <input type="text" name="location" th:value="${location}">
-        </label>
-        <bautton type="submit">Search</button>
-    </form>
+        <!-- Search Section -->
+        <div class="search-section">
+            <form th:action="@{/jobs}" method="get" class="search-form">
+                <div class="form-group">
+                    <label for="location"><i class="fas fa-map-marker-alt"></i> Location</label>
+                    <input type="text" id="location" name="location" th:value="${location}" placeholder="Enter city, state, or remote">
+                </div>
+                <button type="submit" class="btn-search">
+                    <i class="fas fa-search"></i> Search Jobs
+                </button>
+            </form>
+        </div>
 
-    <p>
-        <a th:href="@{/jobs/post}">Post a Job (employers only)</a> |
-        <a th:href="@{/logout}">Logout</a>
-    </p>
+        <!-- Navigation -->
+        <div class="nav-links">
+            <div class="nav-buttons">
+                <a th:href="@{/jobs/post}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Post a Job
+                </a>
+                <a th:href="@{/logout}" class="btn btn-secondary">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+            <div class="job-count" th:text="'Found ' + ${jobs.size()} + ' jobs'">
+                Found X jobs
+            </div>
+        </div>
 
-    <ul>
-        <li th:each="job : ${jobs}">
-            <a th:href="@{/jobs/{id}(id=${job.id})}" th:text="${job.title}"></a>
-            - <span th:text="${job.location}"></span>
-        </li>
-    </ul>
+        <!-- Job Listings -->
+        <div class="jobs-container" th:if="${not jobs.empty}">
+            <div class="job-card" th:each="job : ${jobs}">
+                <div class="job-info">
+                    <h3 class="job-title">
+                        <a th:href="@{/jobs/{id}(id=${job.id})}" th:text="${job.title}">Job Title</a>
+                    </h3>
+                    <div class="job-meta">
+                        <div class="job-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span th:text="${job.location}">Location</span>
+                        </div>
+                        <div class="job-salary" th:if="${job.salary}">
+                            <i class="fas fa-money-bill-wave"></i>
+                            $<span th:text="${job.salary}">Salary</span>
+                        </div>
+                        <div class="job-deadline" th:if="${job.deadline}">
+                            <i class="fas fa-clock"></i>
+                            <span th:text="${job.deadline}">Deadline</span>
+                        </div>
+                    </div>
+                </div>
+                <a th:href="@{/jobs/{id}(id=${job.id})}" class="view-job">
+                    View Details <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
 
+        <!-- No Jobs Message -->
+        <div class="no-jobs" th:if="${jobs.empty}">
+            <i class="fas fa-search"></i>
+            <h3>No jobs found</h3>
+            <p th:if="${location}">Try adjusting your search criteria or <a th:href="@{/jobs}">browse all jobs</a></p>
+            <p th:unless="${location}">Be the first to <a th:href="@{/jobs/post}">post a job</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Add animation delay to job cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const jobCards = document.querySelectorAll('.job-card');
+            jobCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
 </body>
 </html>
