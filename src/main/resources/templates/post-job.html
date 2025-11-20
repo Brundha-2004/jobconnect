@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Job - JobConnect</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h2>Post a Job</h2>
+
+    <form th:action="@{/jobs/post}" th:object="${job}" method="post">
+        <label>Title: <input type="text" th:field="*{title}" /></label><br/>
+        <label>Description: <textarea th:field="*{description}"></textarea></label><br/>
+        <label>Location: <input type="text" th:field="*{location}" /></label><br/>
+        <label>Salary: <input type="number" th:field="*{salary}" /></label><br/>
+        <label>Deadline (YYYY-MM-DD): <input type="date" th:field="*{deadline}" /></label><br/>
+
+        <button type="submit">Create</button>
+    </form>
+
+    <p><a th:href="@{/jobs}">Back to Jobs</a></p>
+</body>
+</html>

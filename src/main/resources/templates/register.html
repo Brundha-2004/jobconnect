@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - JobConnect</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h2> Register</h2>
+    <form th:action="@{/register}"  th:object="${user}" method="post">
+        <label>Full name :<input th:field="*{fullName}"/></label><br/>
+        <label>Email :<input th:field="*{email}" type="text"/></label><br/>
+        <label>Password :<input th:field="*{password}" type="password"/></label><br/>
+        <label>Role:
+            <select th:field="*{role}">
+                <option value="JOB_SEEKER">Job Seeker</option>
+                <option value="EMPLOYER">Employer</option>
+            </select>
+        </label><br/>
+        <div th:if="${error}" th:text="${error}" style="color:red"></div>
+        <button type="submit">Register</button>
+    </form>
+    </body>
+</html><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - JobConnect</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h2>Register</h2>
+
+    <form th:action="@{/register}" th:object="${user}" method="post">
+
+        <label>Full Name:</label>
+        <input th:field="*{fullName}" type="text" required />
+        <br/>
+
+        <label>Email:</label>
+        <input th:field="*{email}" type="email" required />
+        <br/>
+
+        <label>Password:</label>
+        <input th:field="*{password}" type="password" required minlength="6" />
+        <br/>
+
+        <label>Role:</label>
+        <select th:field="*{role}">
+            <option value="JOB_SEEKER">Job Seeker</option>
+            <option value="EMPLOYER">Employer</option>
+        </select>
+        <br/>
+
+        <div th:if="${error}" th:text="${error}" style="color:red"></div>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
