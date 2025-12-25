@@ -1,108 +1,89 @@
-🚀 JobConnect – Job Portal Application
-📌 Project Overview
+# 🚀 JobConnect – Job Portal Application
 
-JobConnect is a full-stack job portal application designed to connect job seekers with employers. It allows users to register, search and apply for jobs, while recruiters can post and manage job openings. The system focuses on simplicity, usability, and real-world job portal functionality.
+## 📌 Project Overview
+JobConnect is a full-stack job portal application designed to connect job seekers with employers. It allows users to register, search, and apply for jobs, while recruiters can post and manage job openings. The system focuses on simplicity, usability, and real-world job portal functionality.
 
-🎯 Key Features
-👨‍💼 Job Seeker
+---
 
-User registration & login
+## 🎯 Key Features
 
-Browse available job listings
+### 👨‍💼 Job Seeker
+- User registration & login  
+- Browse available job listings  
+- Apply for jobs  
+- View applied jobs  
 
-Apply for jobs
+### 🏢 Recruiter
+- Recruiter registration & login  
+- Post new job openings  
+- View and manage posted jobs  
 
-View applied jobs
+### ⚙️ General
+- Secure authentication  
+- Clean and responsive UI  
+- Role-based access (Job Seeker / Recruiter)  
 
-🏢 Recruiter
+---
 
-Recruiter registration & login
+## 🛠️ Tech Stack
 
-Post new job openings
+### Frontend
+- HTML  
+- CSS  
+- JavaScript  
 
-View and manage posted jobs
+### Backend
+- Java  
+- Spring Boot  
 
-⚙️ General
+### Database
+- MySQL  
 
-Secure authentication
+---
 
-Clean and responsive UI
+## 🧩 Architecture
+- RESTful APIs using Spring Boot  
+- MVC Architecture  
+- Backend validation & error handling  
+- Database connectivity using JDBC / JPA  
 
-Role-based access (Job Seeker / Recruiter)
+---
 
-🛠️ Tech Stack
-Frontend
+## 👩‍💻 My Role & Contribution
+- Designed and developed both frontend and backend modules  
+- Implemented user authentication and role-based access  
+- Created REST APIs for job posting and job application  
+- Integrated MySQL database with Spring Boot  
+- Tested application for functional correctness  
 
-HTML
+---
 
-CSS
+## 🔗 Project Links
+- **GitHub Repository:**  
+  https://github.com/Brundha-2004/jobconnect  
 
-JavaScript
+- **Live Demo:**  
+  _(Add deployed link here)_  
 
-Backend
+---
 
-Java
 
-Spring Boot
+## 📚 Future Enhancements
+- Resume upload feature  
+- Job filtering (location, experience, salary)  
+- Admin dashboard  
+- Email notifications  
 
-Database
+---
 
-MySQL
+## 🙋‍♀️ Developed By
+**Brundha G**  
+Full Stack Developer (Fresher)  
+📧 brundhagovind07@gmail.com  
 
-🧩 Architecture
+🔗 GitHub: https://github.com/Brundha-2004  
+🔗 LinkedIn: https://linkedin.com/in/brundha-govind-84a604379  
 
-RESTful APIs using Spring Boot
+---
 
-MVC Architecture
-
-Backend validation & error handling
-
-Database connectivity using JDBC / JPA
-
-👩‍💻 My Role & Contribution
-
-Designed and developed both frontend and backend modules
-
-Implemented user authentication and role-based access
-
-Created REST APIs for job posting and job application
-
-Integrated MySQL database with Spring Boot
-
-Tested application for functional correctness
-
-🔗 Project Links
-
-GitHub Repository:
-https://github.com/Brundha-2004/jobconnect
-
-Live Demo (if deployed):
-Add your deployed link here (optional but recommended)
-
-📸 Screenshots
-
-Add screenshots of Home Page, Job List, Login/Register pages (optional but highly recommended).
-
-📚 Future Enhancements
-
-Resume upload feature
-
-Job filtering (location, experience, salary)
-
-Admin dashboard
-
-Email notifications
-
-🙋‍♀️ Developed By
-
-Brundha G
-Full Stack Developer (Fresher)
-📧 brundhagovind07@gmail.com
-
-🔗 GitHub: https://github.com/Brundha-2004
-
-🔗 LinkedIn: https://linkedin.com/in/brundha-govind-84a604379
-
-⭐ If you like this project
-
-Give it a ⭐ on GitHub — it motivates me to build more!
+⭐ If you like this project, give it a **star** on GitHub!
